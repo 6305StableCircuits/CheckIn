@@ -1,0 +1,11 @@
+{
+	"/": [
+		"src/routes/+page.ts"
+	],
+	"/adminView": [
+		"src/routes/adminView/+page.ts"
+	],
+	"/adminView/[student]": [
+		"src/routes/adminView/[student]/+page.ts"
+	]
+}

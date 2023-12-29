@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* @link https://utopia.fyi/type/calculator?c=320,14,1.125,1580,18,1.2,10,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l&g=s,l,xl,12 */
+
+:root {
+  --step--2: clamp(0.69rem, calc(0.67rem + 0.11vw), 0.78rem);
+  --step--1: clamp(0.78rem, calc(0.74rem + 0.2vw), 0.94rem);
+  --step-0: clamp(0.88rem, calc(0.81rem + 0.32vw), 1.13rem);
+  --step-1: clamp(0.98rem, calc(0.89rem + 0.46vw), 1.35rem);
+  --step-2: clamp(1.11rem, calc(0.98rem + 0.65vw), 1.62rem);
+  --step-3: clamp(1.25rem, calc(1.07rem + 0.89vw), 1.94rem);
+  --step-4: clamp(1.4rem, calc(1.17rem + 1.18vw), 2.33rem);
+  --step-5: clamp(1.58rem, calc(1.27rem + 1.55vw), 2.8rem);
+  --step-6: clamp(1.77rem, calc(1.37rem + 2.01vw), 3.36rem);
+  --step-7: clamp(2rem, calc(1.48rem + 2.58vw), 4.03rem);
+  --step-8: clamp(2.25rem, calc(1.59rem + 3.29vw), 4.84rem);
+  --step-9: clamp(2.53rem, calc(1.69rem + 4.16vw), 5.81rem);
+  --step-10: clamp(2.84rem, calc(1.79rem + 5.24vw), 6.97rem);
+}
+
+/* @link https://utopia.fyi/space/calculator?c=320,14,1.125,1764,18,1.2,10,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,3xs-xl&g=s,l,3xl,12 */
+
+:root {
+  --space-3xs: clamp(0.25rem, calc(0.23rem + 0.08vw), 0.31rem);
+  --space-2xs: clamp(0.44rem, calc(0.41rem + 0.16vw), 0.56rem);
+  --space-xs: clamp(0.69rem, calc(0.64rem + 0.24vw), 0.88rem);
+  --space-s: clamp(0.88rem, calc(0.81rem + 0.32vw), 1.13rem);
+  --space-m: clamp(1.31rem, calc(1.22rem + 0.48vw), 1.69rem);
+  --space-l: clamp(1.75rem, calc(1.62rem + 0.63vw), 2.25rem);
+  --space-xl: clamp(2.63rem, calc(2.43rem + 0.95vw), 3.38rem);
+  --space-2xl: clamp(3.5rem, calc(3.25rem + 1.27vw), 4.5rem);
+  --space-3xl: clamp(5.25rem, calc(4.87rem + 1.9vw), 6.75rem);
+
+  /* One-up pairs */
+  --space-3xs-2xs: clamp(0.25rem, calc(0.17rem + 0.4vw), 0.56rem);
+  --space-2xs-xs: clamp(0.44rem, calc(0.33rem + 0.56vw), 0.88rem);
+  --space-xs-s: clamp(0.69rem, calc(0.58rem + 0.56vw), 1.13rem);
+  --space-s-m: clamp(0.88rem, calc(0.67rem + 1.03vw), 1.69rem);
+  --space-m-l: clamp(1.31rem, calc(1.07rem + 1.19vw), 2.25rem);
+  --space-l-xl: clamp(1.75rem, calc(1.34rem + 2.06vw), 3.38rem);
+  --space-xl-2xl: clamp(2.63rem, calc(2.15rem + 2.38vw), 4.5rem);
+  --space-2xl-3xl: clamp(3.5rem, calc(2.67rem + 4.13vw), 6.75rem);
+
+  /* Custom pairs */
+  --space-3xs-xl: clamp(0.25rem, calc(-0.44rem + 3.46vw), 3.38rem);
+}
+
+/* @link https://utopia.fyi/grid/calculator?c=320,14,1.125,1764,18,1.2,10,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,m-xl&g=s,l,3xl,12 */
+
+:root {
+  --grid-max-width: 110.25rem;
+  --grid-gutter: var(
+    --space-s-l,
+    clamp(0.88rem, calc(0.57rem + 1.52vw), 2.25rem)
+  );
+  --grid-columns: 12;
+}
+
+:root {
+  --shadow-color: 0deg 0% 56%;
+  --shadow-color-dark: 240deg 17% 0%;
+  --shadow-elevation-low: 0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.34),
+    0.4px 0.8px 1px -1.2px hsl(var(--shadow-color) / 0.34),
+    1px 2px 2.5px -2.5px hsl(var(--shadow-color) / 0.34);
+  --shadow-elevation-medium: 0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.36),
+    0.8px 1.6px 2px -0.8px hsl(var(--shadow-color) / 0.36),
+    2.1px 4.1px 5.2px -1.7px hsl(var(--shadow-color) / 0.36),
+    5px 10px 12.6px -2.5px hsl(var(--shadow-color) / 0.36);
+  --shadow-elevation-high: 0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.34),
+    1.5px 2.9px 3.7px -0.4px hsl(var(--shadow-color) / 0.34),
+    2.7px 5.4px 6.8px -0.7px hsl(var(--shadow-color) / 0.34),
+    4.5px 8.9px 11.2px -1.1px hsl(var(--shadow-color) / 0.34),
+    7.1px 14.3px 18px -1.4px hsl(var(--shadow-color) / 0.34),
+    11.2px 22.3px 28.1px -1.8px hsl(var(--shadow-color) / 0.34),
+    17px 33.9px 42.7px -2.1px hsl(var(--shadow-color) / 0.34),
+    25px 50px 62.9px -2.5px hsl(var(--shadow-color) / 0.34);
+  --dark-shadow-elevation-low: 0.3px 0.5px 0.7px hsl(var(--shadow-color-dark) / 0.34),
+    0.4px 0.8px 1px -1.2px hsl(var(--shadow-color-dark) / 0.34),
+    1px 2px 2.5px -2.5px hsl(var(--shadow-color-dark) / 0.34);
+  --dark-shadow-elevation-medium: 0.3px 0.5px 0.7px hsl(var(--shadow-color-dark) / 0.36),
+    0.8px 1.6px 2px -0.8px hsl(var(--shadow-color-dark) / 0.36),
+    2.1px 4.1px 5.2px -1.7px hsl(var(--shadow-color-dark) / 0.36),
+    5px 10px 12.6px -2.5px hsl(var(--shadow-color-dark) / 0.36);
+  --dark-shadow-elevation-high: 0.3px 0.5px 0.7px hsl(var(--shadow-color-dark) / 0.34),
+    1.5px 2.9px 3.7px -0.4px hsl(var(--shadow-color-dark) / 0.34),
+    2.7px 5.4px 6.8px -0.7px hsl(var(--shadow-color-dark) / 0.34),
+    4.5px 8.9px 11.2px -1.1px hsl(var(--shadow-color-dark) / 0.34),
+    7.1px 14.3px 18px -1.4px hsl(var(--shadow-color-dark) / 0.34),
+    11.2px 22.3px 28.1px -1.8px hsl(var(--shadow-color-dark) / 0.34),
+    17px 33.9px 42.7px -2.1px hsl(var(--shadow-color-dark) / 0.34),
+    25px 50px 62.9px -2.5px hsl(var(--shadow-color-dark) / 0.34);
+}
+
+.u-container {
+  max-width: var(--grid-max-width);
+  padding-inline: var(--grid-gutter);
+  margin-inline: auto;
+}
+
+.u-grid {
+  display: grid;
+  gap: var(--grid-gutter);
+}
