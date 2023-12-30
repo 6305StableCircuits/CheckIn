@@ -122,7 +122,7 @@
         class="sm:w-2/3 w-full my-3xs-2xs p-md-lg mx-auto bg-slate-900 h-3/4 rounded-lg overflow-scroll"
     >
         <div
-            class="relative flex items-center mx-auto w-1/2 h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden"
+            class="relative flex items-center mx-auto md:w-2/3 w-full h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden"
         >
             <div
                 class="grid place-items-center mx-3xs h-full min-w-min text-gray-300"

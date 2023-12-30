@@ -24,7 +24,7 @@
 
 <div class="p-[2px]">
     <div role="button" tabindex="0" class="w-full h-full rounded-md border border-slate-400 hover:backdrop-brightness-150 hover:cursor-pointer" id={`h-` + date.valueOf()} style="background-color: rgb(132 204 22 / {hours == 0 ? 0 : hours / maxHours + 0.1 > 1 ? 1 : hours / maxHours + 0.1});"></div>
-    <Popover class="w-fit p-2xs text-lg font-bold text-slate-800" trigger="hover" triggeredBy={`#h-` + date.valueOf()} title={date.toLocaleDateString('en-us', { year:"numeric", month:"long", day:"numeric"})}>
+    <Popover class="w-fit p-2xs text-lg font-bold text-slate-800" title={date.toLocaleDateString('en-us', { year:"numeric", month:"long", day:"numeric"})}>
         {#if startTime == undefined || endTime == undefined}
         Absent
         {:else}
