@@ -52,6 +52,7 @@
         }),
         columnHelper.accessor("shopHours", {
             header: () => "Hours",
+            cell: (val) => val.getValue().toFixed(2),
             footer: (props) => props.column.id,
             enableGlobalFilter: false,
         }),
@@ -105,33 +106,20 @@
 
 <div class="bg-blue-300 h-screen">
     <div class="flex">
-        <a
-            href="/"
-            class="text-white font-bold flex text-left mt-12 text-8xl hover:bg-[#00000033] rounded-xl"
-        >
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-24 h-24"
-            >
-                <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M15.75 19.5 8.25 12l7.5-7.5"
-                />
+        <a href="/" class="text-white font-bold flex text-left mt-12 text-8xl hover:bg-[#00000033] rounded-xl">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-2xl-3xl h-2xl-3xl">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/>
             </svg>
         </a>
-        <h1
-            class="text-white font-bold flex text-center mx-auto pt-12 text-8xl"
-        >
-            Data View
-        </h1>
+        <h1 class="text-white font-bold flex text-center mx-auto pt-12 text-8xl">Data View</h1>
+        <a href="/adminView" class="text-white font-bold flex text-left mt-12 text-8xl hover:bg-[#00000033] rounded-xl">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-2xl-3xl h-2xl-3xl">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              </svg>             
+        </a>
     </div>
     <div
-        class="w-2/3 mx-auto my-3xs-2xs p-3xs-xl bg-slate-900 h-3/4 rounded-lg overflow-scroll"
+        class="sm:w-2/3 w-full my-3xs-2xs p-md-lg mx-auto bg-slate-900 h-3/4 rounded-lg overflow-scroll"
     >
         <div
             class="relative flex items-center mx-auto w-1/2 h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden"
