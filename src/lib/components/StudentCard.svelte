@@ -21,12 +21,12 @@
     }
 </script>
 
-<div class="bg-white min-w-min p-sm-md rounded-lg w-full">
+<div class="bg-white min-w-min p-5 rounded-2xl w-full">
     <h1 class="text-2xl">{student.firstName} {student.lastName}</h1>
     <h2 class="text-xl">ID: {student.id}</h2>
     {#if !checkedIn}
-        <button class="bg-green-500 p-1 w-full mt-2 flex-row rounded-lg" on:click={checkIn}>Check In</button>
+        <button class="bg-green-500 hover:bg-green-600 p-1 py-3 text-lg w-full mt-2 flex-row rounded-2xl" on:click={checkIn}>Check In</button>
     {:else if checkedIn}
-        <button class="bg-red-600 p-1 w-full mt-2 flex-row rounded-lg" on:click={checkOut}>Check Out</button>
+        <button class="bg-red-600 hover:bg-red-700 p-1 py-3 text-lg text-white w-full mt-2 flex-row rounded-2xl" on:click={checkOut}>Check Out</button>
     {/if}
 </div>
