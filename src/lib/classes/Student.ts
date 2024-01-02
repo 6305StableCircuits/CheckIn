@@ -49,4 +49,8 @@ export class Student {
             shopHours: this.shopHours
         })
     }
+
+    get name() {
+        return this.firstName + " " + this.lastName;
+    }
 }
