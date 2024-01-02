@@ -114,6 +114,10 @@
     let newID = '';
 
     async function addStudent(newFirstName: string, newLastName: string, newID: string) {
+        if(newFirstName == '' || newLastName == '' || newID == '') {
+            toggleModale()
+            return
+        }
         await setDoc(doc(db, "students", newID), {
             firstName: newFirstName,
             id: parseInt(newID),
@@ -123,7 +127,7 @@
         });
 
         options.update((coptions) => {
-            coptions.data = [new Student(newFirstName, newLastName, parseInt(newID), [], 0), ...coptions.data];
+            coptions.data = [new Student(newFirstName, newLastName, parseInt(newID), []), ...coptions.data];
             return coptions;
         })
         toggleModale();

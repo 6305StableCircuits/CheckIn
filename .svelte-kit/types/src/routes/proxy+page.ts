@@ -10,7 +10,7 @@ export async function load({ params }) {
 	studentData.forEach((record) => {
 		if (record.exists()) {
 			let recordData = record.data();
-			students.push(new Student(recordData.firstName, recordData.lastName, recordData.id, recordData.scanTimes, recordData.shopHours));
+			students.push(new Student(recordData.firstName, recordData.lastName, recordData.id, recordData.scanTimes));
 		}
 	})
 

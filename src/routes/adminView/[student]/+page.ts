@@ -26,10 +26,10 @@ export async function load({ params }) {
 	}
 	try {
 		const studentData = studentQuery.docs[0].data();
-		student = new Student(studentData.firstName, studentData.lastName, studentData.id, studentData.scanTimes, studentData.shopHours);
-		
+		student = new Student(studentData.firstName, studentData.lastName, studentData.id, studentData.scanTimes);
+
 		return {
-			student: student
+			student: student,
 		};
 	} catch {
 		throw error(500, {
