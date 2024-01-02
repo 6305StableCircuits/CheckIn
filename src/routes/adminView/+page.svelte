@@ -142,7 +142,9 @@
         }
     }
 </script>
-
+<svelte:head>
+    <title>Data View</title>
+</svelte:head>
 {#if modaleShown}
     <div class="h-screen w-screen top-0 left-0 absolute bg-black opacity-25" aria-hidden="true"></div>
     <div class="flex justify-center md:items-center items-end top-0 left-0 absolute h-screen w-screen" use:focusTrap>
