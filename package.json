@@ -36,6 +36,7 @@
 		"@floating-ui/core": "^1.5.2",
 		"@tanstack/svelte-table": "^8.11.2",
 		"firebase": "^10.7.1",
+		"firebaseui": "^6.1.0",
 		"svelte-easy-popover": "^1.0.0",
 		"svelte-floating-ui": "^1.5.8",
 		"svelte-smooth-popover": "^1.0.9",

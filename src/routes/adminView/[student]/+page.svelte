@@ -34,7 +34,7 @@
 
 </script>
 <svelte:head>
-    <title>{$student.name}</title>
+    <title>{$student.name} | 6305 Roster</title>
 </svelte:head>
 {#if modaleShown}
     <div class="h-screen w-screen top-0 left-0 absolute bg-black opacity-25" aria-hidden="true"></div>

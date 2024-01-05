@@ -93,6 +93,18 @@
             showTooltip = false;
         }
     }
+    
+    let startTime: Date | undefined;
+    let endTime: Date | undefined;
+    let addInvalid = true;
+    $: {if(startTime != undefined && endTime != undefined) {
+        addInvalid = startTime.valueOf() > endTime.valueOf() || !checkIns.every((val) => {
+            return startTime == val.start && endTime == val.end && (startTime > val.start && startTime < val.end)
+        })
+        } else {
+            addInvalid = true;
+        }
+    }
 
     async function removeCheckIn(checkIn: CheckIn) {
         scanTimeTable.update((cscantimes) => {
@@ -105,11 +117,11 @@
         await student.update();
     }
 
-    let startTime: Date | undefined;
-    let endTime: Date | undefined;
 
     async function addCheckIn(startTime: Date | undefined, endTime: Date | undefined) {
         if(startTime == undefined || endTime == undefined) {
+            return;
+        } else if(addInvalid) {
             return;
         }
         scanTimeTable.update((cscantimes) => {
@@ -144,12 +156,7 @@
             <div class="p-2xs bg-white rounded-xl">
                 <div class="flex">
                     <h1 class="font-bold">{date.toLocaleDateString('en-us', { year:"numeric", month:"long", day:"numeric"})}</h1>
-                    {#if hoverLocked && checkIns.length == 0}
-                        <button class="ml-4 px-2 rounded-lg font-bold hover:bg-slate-200" on:click={toggleHover}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 stroke-2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                          </svg>
-                        </button>
-                    {:else if hoverLocked}
+                    {#if hoverLocked}
                         <button class="ml-auto px-2 rounded-lg font-bold hover:bg-slate-200" on:click={toggleHover}><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 stroke-2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                           </svg>
@@ -157,43 +164,32 @@
                     {/if}
                 </div>
                 {#if checkIns.length == 0}
-                Absent<br>
+                    Absent
+                {:else}
+                    {#each checkIns as checkIn}
+                        <div class="flex">
+                            <span class="mr-2">{checkIn.start.toLocaleTimeString('en-us', { hour:"numeric", minute:"numeric"})}</span>
+                            <span class="mx-auto">-</span>
+                            <span class="ml-2">{checkIn.end.toLocaleTimeString('en-us', { hour:"numeric", minute:"numeric" })}</span>
+                            {#if hoverLocked}
+                                <button on:click={() => removeCheckIn(checkIn)} class="ml-8 px-2 rounded-lg font-bold hover:bg-slate-200"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 stroke-2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
+                                  </svg>
+                                </button>
+                            {/if}
+                        </div>
+                    {/each}
+                {/if}
                 {#if hoverLocked}
                         <div class="flex">
-                            <input bind:value={startTime} type="time" class="bg-slate-100 mr-2 rounded-lg">
+                            <input bind:value={startTime} type="time" class="bg-slate-100 hover:bg-slate-200 mr-2 rounded-lg">
                             <span class="mx-auto">-</span>
-                            <input bind:value={endTime} type="time" class="bg-slate-100 ml-2 rounded-lg">
-                            <button on:click={() => addCheckIn(startTime, endTime)} class="ml-auto px-2 rounded-lg font-bold hover:bg-slate-200"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 stroke-2">
+                            <input bind:value={endTime} type="time" class="bg-slate-100 hover:bg-slate-200 ml-2 rounded-lg">
+                            <button disabled={addInvalid} on:click={() => addCheckIn(startTime, endTime)} class="{checkIns.length == 0 ? 'ml-4' : 'ml-auto'} px-2 disabled:bg-white rounded-lg font-bold hover:bg-slate-200"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 stroke-2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                               </svg>                          
                             </button>
                         </div>
-                    {/if}
-                {:else}
-                {#each checkIns as checkIn}
-                    <div class="flex">
-                        <span class="mr-2">{checkIn.start.toLocaleTimeString('en-us', { hour:"numeric", minute:"numeric"})}</span>
-                        <span class="mx-auto">-</span>
-                        <span class="ml-2">{checkIn.end.toLocaleTimeString('en-us', { hour:"numeric", minute:"numeric" })}</span>
-                        {#if hoverLocked}
-                            <button on:click={() => removeCheckIn(checkIn)} class="ml-8 px-2 rounded-lg font-bold hover:bg-slate-200"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 stroke-2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
-                              </svg>
-                            </button>
-                        {/if}
-                    </div>
-                {/each}    
-                    {#if hoverLocked}
-                        <div class="flex">
-                            <input bind:value={startTime} type="time" class="bg-slate-100 mr-2 rounded-lg">
-                            <span class="mx-auto">-</span>
-                            <input bind:value={endTime} type="time" class="bg-slate-100 ml-2 rounded-lg">
-                            <button on:click={() => addCheckIn(startTime, endTime)} class="ml-auto px-2 rounded-lg font-bold hover:bg-slate-200"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 stroke-2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                              </svg>                          
-                            </button>
-                        </div>
-                    {/if}
                 {/if}
             </div>
             <div class="absolute w-4 h-4 bg-white rotate-45" bind:this={$arrowRef} />

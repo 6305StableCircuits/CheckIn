@@ -113,17 +113,18 @@
     let newLastName = '';
     let newID = '';
 
+    let addInvalid = true;
+    $: addInvalid = newFirstName == '' || newLastName == '' || newID == '' || isNaN(parseInt(newID)) || newID.length < 9;
+
     async function addStudent(newFirstName: string, newLastName: string, newID: string) {
-        if(newFirstName == '' || newLastName == '' || newID == '') {
-            toggleModale()
-            return
+        if (addInvalid) {
+            return;
         }
-        await setDoc(doc(db, "students", newID), {
+        await setDoc(doc(db, "students", parseInt(newID).toString()), {
             firstName: newFirstName,
             id: parseInt(newID),
             lastName: newLastName,
-            scanTimes: [],
-            shopHours: 0
+            scanTimes: []
         });
 
         options.update((coptions) => {
@@ -143,7 +144,7 @@
     }
 </script>
 <svelte:head>
-    <title>Data View</title>
+    <title>Data View | 6305 Roster</title>
 </svelte:head>
 {#if modaleShown}
     <div class="h-screen w-screen top-0 left-0 absolute bg-black opacity-25" aria-hidden="true"></div>
@@ -165,7 +166,7 @@
                 <input bind:value={newID} class="peer h-full w-full outline-none text-lg text-gray-700 pr-2 bg-slate-100" placeholder="ID" autocomplete="off">
             </div>
             <div class="flex">
-                <button on:click={() => addStudent(newFirstName, newLastName, newID)} class="px-md w-full py-2xs bg-green-500 hover:bg-green-600 font-bold text-white text-lg m-2 rounded-2xl">Confirm</button>
+                <button  disabled={addInvalid} on:click={() => addStudent(newFirstName, newLastName, newID)} class="px-md w-full py-2xs bg-green-500 hover:bg-green-600 disabled:bg-slate-500 disabled:hover:bg-slate-500 font-bold text-white text-lg m-2 rounded-2xl">Confirm</button>
                 <button on:click={toggleModale} class="px-md w-full py-2xs bg-red-600 hover:bg-red-700 font-bold text-white text-lg m-2 rounded-2xl">Cancel</button>
             </div>
         </div>
