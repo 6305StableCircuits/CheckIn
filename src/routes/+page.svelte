@@ -1,11 +1,31 @@
 <script lang="ts">
     import Navbar from "$lib/components/Navbar.svelte";
     import StudentCard from "$lib/components/StudentCard.svelte";
+    import { onDestroy, onMount } from "svelte";
     import { writable } from "svelte/store";
 
 	export let data: import('./$types').PageData;
-    const students = writable(data.students);
+    const students = data.students;
     let search = "";
+    let checkInSillyGuy = (event: KeyboardEvent): void => {
+            if (event.key == "Enter") {
+                students.forEach(async (student) => {
+                    if (student.id == parseInt(search)) {
+                        student.scanTimes = [...student.scanTimes, Date.now()];
+                        await student.update();
+                        search = "";
+                    }
+                })
+            }
+        }
+
+    onMount(() => {
+        addEventListener('keypress', checkInSillyGuy)
+    })
+
+    onDestroy(() => {
+        removeEventListener('keypress', checkInSillyGuy);
+    })
 
 </script>
 <svelte:head>
@@ -23,9 +43,9 @@
             <input bind:value={search} class="peer h-full w-full outline-none text-lg text-gray-700 pr-2" placeholder="Enter Name or ID Number" id="searchBar" autocomplete="off" data-search>
         </div>
         <div class='grid grid-cols-1 lg:grid-cols-2 pt-sm 2xl:grid-cols-4 gap-sm my-sm'>
-            {#each $students as student}
+            {#each students as student}
                 {#if student.shown(search.toLowerCase())}
-                    <StudentCard student={student} />
+                    <StudentCard bind:student />
                 {/if}
             {/each}
         </div>
