@@ -6,7 +6,7 @@
     import { writable, type Writable } from "svelte/store";
     export let date: Date;
     export let student: Student;
-    export let maxHours = 8;
+    export let maxHours = 6.5;
     type CheckIn = {
         start: Date;
         end: Date;
@@ -34,7 +34,6 @@
         checkIns = [({start: new Date(times[i]), end: new Date(times[i+1])}), ...checkIns];
     }}
     $: updateCheckIn(relevantScanTimes);
-    
 
     let arrowRef: Writable<HTMLElement | null> = writable(null);
     const [ floatingRef, floatingContent ] = createFloatingActions({
@@ -97,10 +96,12 @@
     let startTime: Date | undefined;
     let endTime: Date | undefined;
     let addInvalid = true;
-    $: {if(startTime != undefined && endTime != undefined) {
-        addInvalid = startTime.valueOf() > endTime.valueOf() || !checkIns.every((val) => {
-            return startTime == val.start && endTime == val.end && (startTime > val.start && startTime < val.end)
+    $: {if(startTime != undefined && endTime != undefined && checkIns.length != 0) {        
+        addInvalid = startTime.valueOf() > endTime.valueOf() || checkIns.some((val) => {
+            return startTime!.toString() == val.start.toLocaleTimeString('en-us', {hourCycle:'h24', hour:'2-digit', minute:'numeric'}) && endTime!.toString() == val.end.toLocaleTimeString('en-us', {hourCycle:'h24', hour:'2-digit', minute:'numeric'}) || (parseInt(startTime!.toString().replace(':', '')) > parseInt(val.start.toLocaleTimeString('en-us', {hourCycle:'h24', hour:'2-digit', minute:'numeric'}).toString().replace(':', '')) && parseInt(startTime!.toString().replace(':', '')) < parseInt(val.end.toLocaleTimeString('en-us', {hourCycle:'h24', hour:'2-digit', minute:'numeric'}).toString().replace(':', ''))) || (parseInt(endTime!.toString().replace(':', '')) < parseInt(val.end.toLocaleTimeString('en-us', {hourCycle:'h24', hour:'2-digit', minute:'numeric'}).toString().replace(':', '')) && parseInt(endTime!.toString().replace(':', '')) > parseInt(val.start.toLocaleTimeString('en-us', {hourCycle:'h24', hour:'2-digit', minute:'numeric'}).toString().replace(':', ''))) || (parseInt(startTime!.toString().replace(':', '')) < parseInt(val.start.toLocaleTimeString('en-us', {hourCycle:'h24', hour:'2-digit', minute:'numeric'}).toString().replace(':', '')) && parseInt(endTime!.toString().replace(':', '')) > parseInt(val.end.toLocaleTimeString('en-us', {hourCycle:'h24', hour:'2-digit', minute:'numeric'}).toString().replace(':', '')))
         })
+        } else if(startTime != undefined && endTime != undefined && checkIns.length == 0) {
+            addInvalid = startTime.valueOf() > endTime.valueOf();
         } else {
             addInvalid = true;
         }
