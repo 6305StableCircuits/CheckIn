@@ -23,7 +23,8 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
-export const userState: Writable<User | false | undefined> = writable(undefined);
+export const loaded: Writable<boolean> = writable(false);
+export const userState: Writable<User | undefined> = writable(undefined);
 onAuthStateChanged(auth, (user) => {
     if (user) {
       // User is signed in, see docs for a list of available properties
@@ -33,6 +34,7 @@ onAuthStateChanged(auth, (user) => {
     } else {
       // User is signed out
       // ...
-      userState.set(false);
+      userState.set(undefined);
     }
+    loaded.set(true)
   });
