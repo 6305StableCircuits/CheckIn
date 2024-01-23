@@ -8,20 +8,32 @@
 
 	export let data: import('./$types').PageData;
     const students = data.students;
+    var lastTimeEnter = 0;
     let search = "";
     let modaleShown: boolean = false;
-    let pin = "Bronco6305";
+    let pin = "VVc1S2RtSnRUblpPYWsxM1RsRTlQUT09"; //slightly more secure to have it somewhat encoded
     let pinInput = "";
-    
+    window.addEventListener('keydown', function(event) {
+        if (event.key.length === 1) {
+      	    search += event.key;
+	}else if(event.key == "Enter" && Math.round(Date.now()/100) !== Math.round(lastTimeEnter/100)){
+	    doSearch();
+	}
+    });
+const doSearch = ()=>{
+    students.forEach(async (student) => {
+        if (student.id == parseInt(search)) {
+		student.scanTimes = [...student.scanTimes, Date.now()];
+                await student.update();
+                search = "";
+        }
+    })
+    var lastTimeEnter = Date.now();
+}
     let checkInSillyGuy = (event: KeyboardEvent): void => {
-            if (event.key == "Enter") {
-                students.forEach(async (student) => {
-                    if (student.id == parseInt(search)) {
-                        student.scanTimes = [...student.scanTimes, Date.now()];
-                        await student.update();
-                        search = "";
-                    }
-                })
+//not sure if this is a window event or an input event, if its a window event then you can put the if block above here
+            if (event.key == "Enter" && Math.round(Date.now()/100) !== Math.round(lastTimeEnter/100)) {
+                doSearch();
             }
         }
 
@@ -38,7 +50,7 @@
     }
 
     function checkPIN() {
-        if(pinInput == pin) {
+        if(pinInput == window.atob(window.atob(window.atob(pin)))) {
             goto('/adminView');
         } else {
             pinInput = ""
